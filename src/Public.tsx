@@ -1,5 +1,7 @@
+import Login from './components/pages/Login';
+
 const Public = () => {
-  return <>Public</>;
+  return <Login />;
 };
 
 export default Public;

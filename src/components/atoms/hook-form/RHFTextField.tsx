@@ -7,6 +7,8 @@ import React from 'react';
 type Props = {
   name: string;
   label: string;
+  type?: string;
+  InputProps?: object;
 };
 
 const RHFTextField: React.FC<Props> = ({ name, ...other }) => {

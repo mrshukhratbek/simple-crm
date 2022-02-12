@@ -8,6 +8,7 @@ function App() {
   const [token] = useAuth(false);
 
   if (token) {
+    console.log('auth');
     return <Private />;
   }
 

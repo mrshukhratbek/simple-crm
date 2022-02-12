@@ -1,11 +1,10 @@
 import * as Yup from 'yup';
 import React from 'react';
-import { Link as RouterLink } from 'react-router-dom';
 // form
 import { useForm } from 'react-hook-form';
 import { yupResolver } from '@hookform/resolvers/yup';
 // @mui
-import { Link, Stack, Alert, IconButton, InputAdornment } from '@mui/material';
+import { Stack, IconButton, InputAdornment } from '@mui/material';
 import { LoadingButton } from '@mui/lab';
 // hooks
 import useAuth from '../../hooks/useAuth';
@@ -37,20 +36,22 @@ export default function LoginForm() {
 
   const {
     reset,
-    setError,
+    // setError,
     handleSubmit,
-    formState: { errors, isSubmitting },
+    formState: { isSubmitting },
   } = methods;
 
   const onSubmit = async (data: any) => {
     try {
-      await setToken('authentication has taken place');
+      await setToken({
+        email: data.email,
+        password: data.password,
+      });
       // await login(data.email, data.password);
     } catch (error) {
-      // console.error(error);
       reset();
       if (isMountedRef.current) {
-        setError('afterSubmit', error);
+        // setError('afterSubmit', error);
       }
     }
   };
@@ -58,25 +59,39 @@ export default function LoginForm() {
   return (
     <FormProvider methods={methods} onSubmit={handleSubmit(onSubmit)}>
       <Stack spacing={3}>
-        {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>}
+        {/* {!!errors.afterSubmit && <Alert severity="error">{errors.afterSubmit.message}</Alert>} */}
+        <RHFTextField name="email" label="Email address" type="email" />
+
+        <RHFTextField
+          name="password"
+          label="Password"
+          type={showPassword ? 'text' : 'password'}
+          InputProps={{
+            endAdornment: (
+              <InputAdornment position="end">
+                <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
+                  <Iconify
+                    icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'}
+                    sx={undefined}
+                  />
+                </IconButton>
+              </InputAdornment>
+            ),
+          }}
+        />
       </Stack>
 
-      <RHFTextField name="email" label="Email address" />
-
-      <RHFTextField
-        name="password"
-        label="Password"
-        type={showPassword ? 'text' : 'password'}
-        InputProps={{
-          endAdornment: (
-            <InputAdornment position="end">
-              <IconButton onClick={() => setShowPassword(!showPassword)} edge="end">
-                <Iconify icon={showPassword ? 'eva:eye-fill' : 'eva:eye-off-fill'} />
-              </IconButton>
-            </InputAdornment>
-          ),
-        }}
-        />
+      <Stack sx={{ my: 3 }}>
+        <LoadingButton
+          fullWidth
+          size="large"
+          type="submit"
+          variant="contained"
+          loading={isSubmitting}
+        >
+          Login
+        </LoadingButton>
+      </Stack>
     </FormProvider>
   );
 }

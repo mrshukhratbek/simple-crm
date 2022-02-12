@@ -6,7 +6,7 @@ import React from 'react';
 
 type Props = {
   icon: any;
-  sx: any;
+  sx?: any;
 };
 
 const Iconify: React.FC<Props> = ({ icon, sx, ...other }) => {
