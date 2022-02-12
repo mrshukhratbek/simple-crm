@@ -24,8 +24,8 @@ export default function LoginForm() {
   });
 
   const defaultValues = {
-    email: 'demo@minimals.cc',
-    password: 'demo1234',
+    email: 'demo@crm.system',
+    password: 'demo123',
     remember: true,
   };
 
