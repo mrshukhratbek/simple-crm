@@ -1,6 +1,5 @@
-import React from 'react';
 import './App.css';
-import { useAuth } from './context/AuthContext';
+import useAuth from './hooks/useAuth';
 
 import Private from './Private';
 import Public from './Public';

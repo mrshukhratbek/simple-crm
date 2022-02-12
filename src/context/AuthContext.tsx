@@ -6,7 +6,7 @@ type ContextProps = {
   setToken: any;
 };
 
-export const Context = React.createContext<Partial<ContextProps>>({});
+export const AuthContext = React.createContext<Partial<ContextProps>>({});
 
 export const AuthProvider = ({ children }: any) => {
   const localToken: string = localStorage.getItem('_auth_token_') as string;
@@ -21,7 +21,7 @@ export const AuthProvider = ({ children }: any) => {
   }, [token]);
 
   return (
-    <Context.Provider
+    <AuthContext.Provider
       value={{
         token,
         authenticated: token !== null,
@@ -29,12 +29,6 @@ export const AuthProvider = ({ children }: any) => {
       }}
     >
       {children}
-    </Context.Provider>
+    </AuthContext.Provider>
   );
-};
-
-export const useAuth = (settrOnly: any) => {
-  const { token, setToken } = React.useContext(Context);
-
-  return settrOnly ? [setToken] : [token, setToken];
 };
